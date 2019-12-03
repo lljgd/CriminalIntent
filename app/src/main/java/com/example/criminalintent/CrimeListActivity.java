@@ -1,41 +1,24 @@
 package com.example.criminalintent;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CrimeListActivity extends AppCompatActivity {
-
-    // Model
-    private List<Crime> crimes = generateDemoCrimes();
-
-    // View
-    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_crime_list);
 
-        recyclerView = findViewById(R.id.recycler);
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new CrimeListAdapter(crimes));
-    }
+        if (fragmentManager.findFragmentById(R.id.fragment_container) == null) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, new CrimeListFragment())
+                    .commit();
 
-    private static List<Crime> generateDemoCrimes() {
-        List<Crime> result = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            Crime crime = new Crime();
-            crime.setTitle("Crime #" + i);
-            crime.setSolved(i % 2 == 0); // Для каждого второго объекта mCrimes.add(crime);
-            result.add(crime);
         }
-        return result;
     }
 }
