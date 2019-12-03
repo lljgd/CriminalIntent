@@ -16,7 +16,7 @@ public class CrimeListActivity extends AppCompatActivity {
 
         if (fragmentManager.findFragmentById(R.id.fragment_container) == null) {
             fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, new CrimeListFragment())
+                    .replace(R.id.fragment_container, new CrimeFragment())
                     .commit();
 
         }
