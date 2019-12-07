@@ -24,6 +24,7 @@ public class CrimeListFragment extends Fragment {
 
     // View
     private RecyclerView recyclerView;
+    private CrimeListAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,10 +52,8 @@ public class CrimeListFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new CrimeListAdapter(
-                CrimeStore.getInstance().getCrimes(),
-                itemListener)
-        );
+        adapter = new CrimeListAdapter(CrimeStore.getInstance().getCrimes(), itemListener);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -65,7 +64,8 @@ public class CrimeListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.add) {
-            Toast.makeText(getContext(), "Add menu button was clicked", Toast.LENGTH_SHORT).show();
+            CrimeStore.getInstance().generateRandomCrime();
+            adapter.notifyDataSetChanged();
             return true;
         } else {
             return super.onOptionsItemSelected(item);

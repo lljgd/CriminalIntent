@@ -2,6 +2,7 @@ package com.example.criminalintent.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 public class CrimeStore {
@@ -34,15 +35,14 @@ public class CrimeStore {
         return null;
     }
 
-//    private static List<Crime> generateDemoCrimes() {
-//        List<Crime> result = new ArrayList<>();
-//        for (int i = 0; i < 100; i++) {
-//            Crime crime = new Crime();
-//            crime.setTitle("Crime #" + i);
-//            crime.setSolved(i % 2 == 0); // Для каждого второго объекта mCrimes.add(crime);
-//            result.add(crime);
-//        }
-//        return result;
-//    }
+    public void generateRandomCrime() {
+        Random random = new Random();
 
+        Crime crime = new Crime();
+
+        crime.setTitle("Crime #" + random.nextInt());
+        crime.setSolved(random.nextBoolean());
+
+        crimes.add(crime);
+    }
 }
