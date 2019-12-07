@@ -1,4 +1,4 @@
-package com.example.criminalintent;
+package com.example.criminalintent.controller;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +10,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.criminalintent.view.CrimeListAdapter;
+import com.example.criminalintent.R;
+import com.example.criminalintent.model.Crime;
 
 import java.util.ArrayList;
 import java.util.List;

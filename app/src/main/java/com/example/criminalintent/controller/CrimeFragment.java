@@ -1,4 +1,4 @@
-package com.example.criminalintent;
+package com.example.criminalintent.controller;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,6 +14,9 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.criminalintent.R;
+import com.example.criminalintent.model.Crime;
 
 public class CrimeFragment extends Fragment {
 
