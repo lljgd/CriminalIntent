@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -46,8 +47,18 @@ public class CrimeListFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new CrimeListAdapter(crimes));
+        recyclerView.setAdapter(new CrimeListAdapter(crimes, itemListener));
     }
+
+    private final CrimeListAdapter.ItemListener itemListener = new CrimeListAdapter.ItemListener() {
+        @Override
+        public void onCrimeClicked(Crime crime) {
+            Toast.makeText(
+                    getContext(),
+                    crime.getTitle() + " was clicked",
+                    Toast.LENGTH_SHORT).show();
+        }
+    };
 
     private static List<Crime> generateDemoCrimes() {
         List<Crime> result = new ArrayList<>();

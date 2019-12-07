@@ -15,6 +15,8 @@ class CrimeViewHolder extends RecyclerView.ViewHolder {
 
     private Crime crime;
 
+    private CrimeListAdapter.ItemListener itemListener;
+
     private TextView titleView;
     private TextView dateView;
     private CheckBox solvedCheckBox;
@@ -22,14 +24,11 @@ class CrimeViewHolder extends RecyclerView.ViewHolder {
     private final View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Toast.makeText(
-                    v.getContext(),
-                    crime.getTitle() + " was clicked",
-                    Toast.LENGTH_SHORT).show();
+            itemListener.onCrimeClicked(crime);
         }
     };
 
-    public CrimeViewHolder(@NonNull View itemView) {
+    public CrimeViewHolder(@NonNull View itemView, CrimeListAdapter.ItemListener itemListener) {
         super(itemView);
 
         titleView = itemView.findViewById(R.id.title);
@@ -37,6 +36,8 @@ class CrimeViewHolder extends RecyclerView.ViewHolder {
         solvedCheckBox = itemView.findViewById(R.id.solved);
 
         itemView.setOnClickListener(clickListener);
+
+        this.itemListener = itemListener;
     }
 
     public void bindTo(Crime crime) {
