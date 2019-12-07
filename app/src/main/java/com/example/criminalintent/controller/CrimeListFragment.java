@@ -2,6 +2,9 @@ package com.example.criminalintent.controller;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -21,6 +24,12 @@ public class CrimeListFragment extends Fragment {
 
     // View
     private RecyclerView recyclerView;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Nullable
     @Override
@@ -46,6 +55,21 @@ public class CrimeListFragment extends Fragment {
                 CrimeStore.getInstance().getCrimes(),
                 itemListener)
         );
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.crime_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.add) {
+            Toast.makeText(getContext(), "Add menu button was clicked", Toast.LENGTH_SHORT).show();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     private final CrimeListAdapter.ItemListener itemListener = new CrimeListAdapter.ItemListener() {

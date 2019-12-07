@@ -19,7 +19,7 @@ public class CrimeStore {
     }
     // End of Singleton
 
-    private List<Crime> crimes = generateDemoCrimes();
+    private List<Crime> crimes = new ArrayList<>();
 
     public List<Crime> getCrimes() {
         return crimes;
@@ -34,15 +34,15 @@ public class CrimeStore {
         return null;
     }
 
-    private static List<Crime> generateDemoCrimes() {
-        List<Crime> result = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            Crime crime = new Crime();
-            crime.setTitle("Crime #" + i);
-            crime.setSolved(i % 2 == 0); // Для каждого второго объекта mCrimes.add(crime);
-            result.add(crime);
-        }
-        return result;
-    }
+//    private static List<Crime> generateDemoCrimes() {
+//        List<Crime> result = new ArrayList<>();
+//        for (int i = 0; i < 100; i++) {
+//            Crime crime = new Crime();
+//            crime.setTitle("Crime #" + i);
+//            crime.setSolved(i % 2 == 0); // Для каждого второго объекта mCrimes.add(crime);
+//            result.add(crime);
+//        }
+//        return result;
+//    }
 
 }
