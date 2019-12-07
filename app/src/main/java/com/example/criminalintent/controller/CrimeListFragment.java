@@ -12,17 +12,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.criminalintent.model.CrimeStore;
 import com.example.criminalintent.view.CrimeListAdapter;
 import com.example.criminalintent.R;
 import com.example.criminalintent.model.Crime;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CrimeListFragment extends Fragment {
-
-    // Model
-    private List<Crime> crimes = generateDemoCrimes();
 
     // View
     private RecyclerView recyclerView;
@@ -47,27 +42,19 @@ public class CrimeListFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new CrimeListAdapter(crimes, itemListener));
+        recyclerView.setAdapter(new CrimeListAdapter(
+                CrimeStore.getInstance().getCrimes(),
+                itemListener)
+        );
     }
 
     private final CrimeListAdapter.ItemListener itemListener = new CrimeListAdapter.ItemListener() {
         @Override
         public void onCrimeClicked(Crime crime) {
-            Toast.makeText(
-                    getContext(),
-                    crime.getTitle() + " was clicked",
-                    Toast.LENGTH_SHORT).show();
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, CrimeFragment.makeInstance(crime.getId()))
+                    .addToBackStack(null)
+                    .commit();
         }
     };
-
-    private static List<Crime> generateDemoCrimes() {
-        List<Crime> result = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            Crime crime = new Crime();
-            crime.setTitle("Crime #" + i);
-            crime.setSolved(i % 2 == 0); // Для каждого второго объекта mCrimes.add(crime);
-            result.add(crime);
-        }
-        return result;
-    }
 }
