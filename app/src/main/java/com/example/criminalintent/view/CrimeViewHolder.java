@@ -28,6 +28,14 @@ class CrimeViewHolder extends RecyclerView.ViewHolder {
         }
     };
 
+    private final View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            itemListener.onCrimeLongClicked(crime);
+            return true;
+        }
+    };
+
     public CrimeViewHolder(@NonNull View itemView, CrimeListAdapter.ItemListener itemListener) {
         super(itemView);
 
@@ -36,6 +44,7 @@ class CrimeViewHolder extends RecyclerView.ViewHolder {
         solvedCheckBox = itemView.findViewById(R.id.solved);
 
         itemView.setOnClickListener(clickListener);
+        itemView.setOnLongClickListener(longClickListener);
 
         this.itemListener = itemListener;
     }

@@ -45,4 +45,8 @@ public class CrimeStore {
 
         crimes.add(crime);
     }
+
+    public void deleteCrime(Crime crime) {
+        crimes.remove(crime);
+    }
 }

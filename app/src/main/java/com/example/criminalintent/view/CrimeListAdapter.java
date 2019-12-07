@@ -23,6 +23,13 @@ public class CrimeListAdapter extends RecyclerView.Adapter<CrimeViewHolder> {
             ItemListener itemListener) {
         this.crimes = crimes;
         this.itemListener = itemListener;
+
+        setHasStableIds(true);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return crimes.get(position).hashCode();
     }
 
     @NonNull
@@ -47,5 +54,6 @@ public class CrimeListAdapter extends RecyclerView.Adapter<CrimeViewHolder> {
 
     public interface ItemListener {
         void onCrimeClicked(Crime crime);
+        void onCrimeLongClicked(Crime crime);
     }
 }

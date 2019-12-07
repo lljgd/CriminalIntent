@@ -80,5 +80,11 @@ public class CrimeListFragment extends Fragment {
                     .addToBackStack(null)
                     .commit();
         }
+
+        @Override
+        public void onCrimeLongClicked(Crime crime) {
+            CrimeStore.getInstance().deleteCrime(crime);
+            adapter.notifyDataSetChanged();
+        }
     };
 }
