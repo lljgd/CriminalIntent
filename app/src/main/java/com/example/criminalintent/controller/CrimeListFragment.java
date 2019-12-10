@@ -65,12 +65,31 @@ public class CrimeListFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.add) {
             CrimeStore.getInstance().generateRandomCrime();
-            adapter.notifyDataSetChanged();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        CrimeStore.getInstance().addListener(crimesListChangedListener);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onPause() {
+        CrimeStore.getInstance().removeListener(crimesListChangedListener);
+        super.onPause();
+    }
+
+    private final CrimeStore.Listener crimesListChangedListener = new CrimeStore.Listener() {
+        @Override
+        public void onCrimesListChanged() {
+            adapter.notifyDataSetChanged();
+        }
+    };
 
     private final CrimeListAdapter.ItemListener itemListener = new CrimeListAdapter.ItemListener() {
         @Override
@@ -83,8 +102,9 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onCrimeLongClicked(Crime crime) {
-            CrimeStore.getInstance().deleteCrime(crime);
-            adapter.notifyDataSetChanged();
+            DeleteConfirmationDialogFragment dialogFragment =
+                    DeleteConfirmationDialogFragment.makeInstance(crime.getId());
+            dialogFragment.show(getFragmentManager(), null);
         }
     };
 }

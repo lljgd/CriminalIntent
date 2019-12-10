@@ -5,4 +5,5 @@
     <string name="crime_details_label">Details</string>
     <string name="crime_solved_label">Solved</string>
     <string name="menu_add">Add</string>
+    <string name="dialog_delete_item_message">Do you really want to delete this item?</string>
 </resources>

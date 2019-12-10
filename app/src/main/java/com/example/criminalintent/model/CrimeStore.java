@@ -1,8 +1,10 @@
 package com.example.criminalintent.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 
 public class CrimeStore {
@@ -44,9 +46,41 @@ public class CrimeStore {
         crime.setSolved(random.nextBoolean());
 
         crimes.add(crime);
+        notifyListeners();
     }
 
     public void deleteCrime(Crime crime) {
         crimes.remove(crime);
+        notifyListeners();
+    }
+
+    public void deleteCrime(UUID id) {
+        for (Crime crime : crimes) {
+            if (crime.getId() == id) {
+                crimes.remove(crime);
+                notifyListeners();
+                break;
+            }
+        }
+    }
+
+    private void notifyListeners() {
+        for (Listener listener : listenersSet) {
+            listener.onCrimesListChanged();
+        }
+    }
+
+    private final Set<Listener> listenersSet = new HashSet<>();
+
+    public void addListener(Listener listener) {
+        listenersSet.add(listener);
+    }
+
+    public void removeListener(Listener listener) {
+        listenersSet.remove(listener);
+    }
+
+    public interface Listener {
+        void onCrimesListChanged();
     }
 }
