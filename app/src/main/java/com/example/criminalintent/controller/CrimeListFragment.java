@@ -7,7 +7,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +20,7 @@ import com.example.criminalintent.view.CrimeListAdapter;
 import com.example.criminalintent.R;
 import com.example.criminalintent.model.Crime;
 import com.example.criminalintent.view.CrimeViewHolder;
+import com.google.android.material.snackbar.Snackbar;
 
 public class CrimeListFragment extends Fragment {
 
@@ -59,19 +59,31 @@ public class CrimeListFragment extends Fragment {
 
         ItemTouchHelper touchHelper = new ItemTouchHelper(
                 new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
+                    @Override
+                    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                        return false;
+                    }
 
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                CrimeViewHolder crimeViewHolder = (CrimeViewHolder) viewHolder;
-                Crime crime = crimeViewHolder.getCrime();
-                CrimeStore.getInstance().deleteCrime(crime);
-            }
-        });
+                    @Override
+                    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                        CrimeViewHolder crimeViewHolder = (CrimeViewHolder) viewHolder;
+                        Crime crime = crimeViewHolder.getCrime();
+                        deleteItem(crime, viewHolder.getAdapterPosition());
+                    }
+                });
         touchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    private void deleteItem(final Crime crime, final int position) {
+        CrimeStore.getInstance().deleteCrime(crime);
+        Snackbar.make(recyclerView, R.string.snackbar_message, Snackbar.LENGTH_LONG)
+                .setAction(R.string.snackbar_action, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CrimeStore.getInstance().resurrectCrim(crime, position);
+                    }
+                })
+                .show();
     }
 
     @Override

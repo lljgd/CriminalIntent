@@ -64,6 +64,11 @@ public class CrimeStore {
         }
     }
 
+    public void resurrectCrim(Crime crime, int position) {
+        crimes.add(position, crime);
+        notifyListeners();
+    }
+
     private void notifyListeners() {
         for (Listener listener : listenersSet) {
             listener.onCrimesListChanged();
