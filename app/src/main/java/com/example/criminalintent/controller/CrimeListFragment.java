@@ -1,5 +1,6 @@
 package com.example.criminalintent.controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -124,10 +125,8 @@ public class CrimeListFragment extends Fragment {
     private final CrimeListAdapter.ItemListener itemListener = new CrimeListAdapter.ItemListener() {
         @Override
         public void onCrimeClicked(Crime crime) {
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, CrimeFragment.makeInstance(crime.getId()))
-                    .addToBackStack(null)
-                    .commit();
+            Intent intent = CrimeActivity.makeIntent(getContext(), crime.getId());
+            startActivity(intent);
         }
 
         @Override
