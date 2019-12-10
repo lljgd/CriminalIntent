@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +20,7 @@ import com.example.criminalintent.model.CrimeStore;
 import com.example.criminalintent.view.CrimeListAdapter;
 import com.example.criminalintent.R;
 import com.example.criminalintent.model.Crime;
+import com.example.criminalintent.view.CrimeViewHolder;
 
 public class CrimeListFragment extends Fragment {
 
@@ -54,6 +56,22 @@ public class CrimeListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new CrimeListAdapter(CrimeStore.getInstance().getCrimes(), itemListener);
         recyclerView.setAdapter(adapter);
+
+        ItemTouchHelper touchHelper = new ItemTouchHelper(
+                new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                CrimeViewHolder crimeViewHolder = (CrimeViewHolder) viewHolder;
+                Crime crime = crimeViewHolder.getCrime();
+                CrimeStore.getInstance().deleteCrime(crime);
+            }
+        });
+        touchHelper.attachToRecyclerView(recyclerView);
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.example.criminalintent.view;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.criminalintent.R;
 import com.example.criminalintent.model.Crime;
 
-class CrimeViewHolder extends RecyclerView.ViewHolder {
+import java.util.UUID;
+
+public class CrimeViewHolder extends RecyclerView.ViewHolder {
 
     private Crime crime;
 
@@ -55,5 +56,9 @@ class CrimeViewHolder extends RecyclerView.ViewHolder {
         titleView.setText(crime.getTitle());
         dateView.setText(crime.getDate().toString());
         solvedCheckBox.setChecked(crime.isSolved());
+    }
+
+    public Crime getCrime() {
+        return crime;
     }
 }
