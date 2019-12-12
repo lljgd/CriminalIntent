@@ -1,39 +1,48 @@
-package com.example.criminalintent;
+package com.example.criminalintent.view;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.criminalintent.R;
+import com.example.criminalintent.model.Crime;
 
 import java.util.List;
 
 public class CrimeListAdapter extends RecyclerView.Adapter<CrimeViewHolder> {
 
     private List<Crime> crimes;
+    private ItemListener itemListener;
 
-    public CrimeListAdapter(List<Crime> crimes) {
+    public CrimeListAdapter(
+            List<Crime> crimes,
+            ItemListener itemListener) {
         this.crimes = crimes;
+        this.itemListener = itemListener;
+
+        setHasStableIds(true);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return crimes.get(position).hashCode();
     }
 
     @NonNull
     @Override
     public CrimeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.e("CrimeListAdapter", "onCreateViewHolder");
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.item_crime, parent, false);
 
-        return new CrimeViewHolder(itemView);
+        return new CrimeViewHolder(itemView, itemListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CrimeViewHolder holder, int position) {
-        Log.e("CrimeListAdapter", "onBindViewHolder - position " + position);
         Crime crime = crimes.get(position);
         holder.bindTo(crime);
     }
@@ -41,5 +50,10 @@ public class CrimeListAdapter extends RecyclerView.Adapter<CrimeViewHolder> {
     @Override
     public int getItemCount() {
         return crimes.size();
+    }
+
+    public interface ItemListener {
+        void onCrimeClicked(Crime crime);
+        void onCrimeLongClicked(Crime crime);
     }
 }

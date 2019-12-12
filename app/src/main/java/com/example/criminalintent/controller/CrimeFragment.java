@@ -1,4 +1,4 @@
-package com.example.criminalintent;
+package com.example.criminalintent.controller;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,7 +15,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.criminalintent.R;
+import com.example.criminalintent.model.Crime;
+import com.example.criminalintent.model.CrimeStore;
+
+import java.util.UUID;
+
 public class CrimeFragment extends Fragment {
+
+    private static final String KEY_CRIME_ID = "key_crime_id";
 
     // Model
     private Crime crime;
@@ -29,7 +37,8 @@ public class CrimeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        crime = new Crime();
+        UUID id = (UUID) getArguments().getSerializable(KEY_CRIME_ID);
+        crime = CrimeStore.getInstance().getById(id);
     }
 
     @Nullable
@@ -78,5 +87,13 @@ public class CrimeFragment extends Fragment {
                 crime.setSolved(isChecked);
             }
         });
+    }
+
+    public static CrimeFragment makeInstance(UUID id) {
+        CrimeFragment fragment = new CrimeFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(KEY_CRIME_ID, id);
+        fragment.setArguments(args);
+        return fragment;
     }
 }
