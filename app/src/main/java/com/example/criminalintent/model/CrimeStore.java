@@ -1,89 +1,24 @@
 package com.example.criminalintent.model;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
 import java.util.UUID;
 
-public class CrimeStore {
+public interface CrimeStore {
+    List<Crime> getCrimes();
 
-    // Singleton
-    private static CrimeStore instance;
+    Crime getById(UUID id);
 
-    private CrimeStore() { }
+    void generateRandomCrime();
 
-    public static CrimeStore getInstance() {
-        if (instance == null) {
-            instance = new CrimeStore();
-        }
-        return instance;
-    }
-    // End of Singleton
+    void deleteCrime(Crime crime);
 
-    private List<Crime> crimes = new ArrayList<>();
+    void deleteCrime(UUID id);
 
-    public List<Crime> getCrimes() {
-        return crimes;
-    }
+    void resurrectCrime(Crime crime, int position);
 
-    public Crime getById(UUID id) {
-        for (Crime crime : crimes) {
-            if (crime.getId().equals(id)) {
-                return crime;
-            }
-        }
-        return null;
-    }
+    void addListener(Listener listener);
 
-    public void generateRandomCrime() {
-        Random random = new Random();
-
-        Crime crime = new Crime();
-
-        crime.setTitle("Crime #" + random.nextInt());
-        crime.setSolved(random.nextBoolean());
-
-        crimes.add(crime);
-        notifyListeners();
-    }
-
-    public void deleteCrime(Crime crime) {
-        crimes.remove(crime);
-        notifyListeners();
-    }
-
-    public void deleteCrime(UUID id) {
-        for (Crime crime : crimes) {
-            if (crime.getId() == id) {
-                crimes.remove(crime);
-                notifyListeners();
-                break;
-            }
-        }
-    }
-
-    public void resurrectCrim(Crime crime, int position) {
-        crimes.add(position, crime);
-        notifyListeners();
-    }
-
-    private void notifyListeners() {
-        for (Listener listener : listenersSet) {
-            listener.onCrimesListChanged();
-        }
-    }
-
-    private final Set<Listener> listenersSet = new HashSet<>();
-
-    public void addListener(Listener listener) {
-        listenersSet.add(listener);
-    }
-
-    public void removeListener(Listener listener) {
-        listenersSet.remove(listener);
-    }
+    void removeListener(Listener listener);
 
     public interface Listener {
         void onCrimesListChanged();

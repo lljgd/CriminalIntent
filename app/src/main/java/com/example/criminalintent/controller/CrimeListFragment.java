@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.criminalintent.model.CrimeStore;
+import com.example.criminalintent.model.CrimeStoreProvider;
 import com.example.criminalintent.view.CrimeListAdapter;
 import com.example.criminalintent.R;
 import com.example.criminalintent.model.Crime;
@@ -55,7 +56,7 @@ public class CrimeListFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new CrimeListAdapter(CrimeStore.getInstance().getCrimes(), itemListener);
+        adapter = new CrimeListAdapter(CrimeStoreProvider.getInstance().getCrimes(), itemListener);
         recyclerView.setAdapter(adapter);
 
         ItemTouchHelper touchHelper = new ItemTouchHelper(
@@ -76,12 +77,12 @@ public class CrimeListFragment extends Fragment {
     }
 
     private void deleteItem(final Crime crime, final int position) {
-        CrimeStore.getInstance().deleteCrime(crime);
+        CrimeStoreProvider.getInstance().deleteCrime(crime);
         Snackbar.make(recyclerView, R.string.snackbar_message, Snackbar.LENGTH_LONG)
                 .setAction(R.string.snackbar_action, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        CrimeStore.getInstance().resurrectCrim(crime, position);
+                        CrimeStoreProvider.getInstance().resurrectCrime(crime, position);
                     }
                 })
                 .show();
@@ -95,7 +96,7 @@ public class CrimeListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.add) {
-            CrimeStore.getInstance().generateRandomCrime();
+            CrimeStoreProvider.getInstance().generateRandomCrime();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -105,13 +106,13 @@ public class CrimeListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        CrimeStore.getInstance().addListener(crimesListChangedListener);
+        CrimeStoreProvider.getInstance().addListener(crimesListChangedListener);
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onPause() {
-        CrimeStore.getInstance().removeListener(crimesListChangedListener);
+        CrimeStoreProvider.getInstance().removeListener(crimesListChangedListener);
         super.onPause();
     }
 
