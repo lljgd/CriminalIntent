@@ -1,4 +1,4 @@
-package com.example.criminalintent.controller;
+package com.example.criminalintent.feature.details;
 
 import android.content.Context;
 import android.content.Intent;

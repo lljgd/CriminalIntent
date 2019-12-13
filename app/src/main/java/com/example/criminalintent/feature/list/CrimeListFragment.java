@@ -1,4 +1,4 @@
-package com.example.criminalintent.controller;
+package com.example.criminalintent.feature.list;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,12 +16,13 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.criminalintent.model.CrimeStore;
-import com.example.criminalintent.model.CrimeStoreProvider;
-import com.example.criminalintent.view.CrimeListAdapter;
+import com.example.criminalintent.feature.details.CrimeActivity;
+import com.example.criminalintent.data.CrimeStore;
+import com.example.criminalintent.data.CrimeStoreProvider;
 import com.example.criminalintent.R;
-import com.example.criminalintent.model.Crime;
-import com.example.criminalintent.view.CrimeViewHolder;
+import com.example.criminalintent.data.model.Crime;
+import com.example.criminalintent.feature.list.adapter.CrimeListAdapter;
+import com.example.criminalintent.feature.list.adapter.CrimeViewHolder;
 import com.google.android.material.snackbar.Snackbar;
 
 public class CrimeListFragment extends Fragment {

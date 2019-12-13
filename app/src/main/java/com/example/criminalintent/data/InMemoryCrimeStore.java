@@ -1,4 +1,6 @@
-package com.example.criminalintent.model;
+package com.example.criminalintent.data;
+
+import com.example.criminalintent.data.model.Crime;
 
 import java.util.ArrayList;
 import java.util.List;

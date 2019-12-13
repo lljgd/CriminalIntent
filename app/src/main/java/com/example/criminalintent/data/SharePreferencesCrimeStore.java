@@ -1,8 +1,9 @@
-package com.example.criminalintent.model;
+package com.example.criminalintent.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.criminalintent.data.model.Crime;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class SharePreferencesCrimeStore implements CrimeStore {
+class SharePreferencesCrimeStore implements CrimeStore {
 
     private final SharedPreferences sharedPreferences;
 

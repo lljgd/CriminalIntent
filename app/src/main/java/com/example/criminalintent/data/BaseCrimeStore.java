@@ -1,4 +1,4 @@
-package com.example.criminalintent.model;
+package com.example.criminalintent.data;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +12,6 @@ abstract class BaseCrimeStore implements CrimeStore {
             listener.onCrimesListChanged();
         }
     }
-
 
     @Override
     public void addListener(Listener listener) {

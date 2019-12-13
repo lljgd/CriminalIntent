@@ -1,6 +1,5 @@
-package com.example.criminalintent.view;
+package com.example.criminalintent.feature.list.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.criminalintent.R;
-import com.example.criminalintent.model.Crime;
+import com.example.criminalintent.data.model.Crime;
 
 import java.util.List;
 

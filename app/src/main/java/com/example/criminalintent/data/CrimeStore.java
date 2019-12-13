@@ -1,4 +1,6 @@
-package com.example.criminalintent.model;
+package com.example.criminalintent.data;
+
+import com.example.criminalintent.data.model.Crime;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,7 +24,7 @@ public interface CrimeStore {
 
     void removeListener(Listener listener);
 
-    public interface Listener {
+    interface Listener {
         void onCrimesListChanged();
     }
 }
