@@ -56,7 +56,7 @@ public class CrimeListFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new CrimeListAdapter(CrimeStoreProvider.getInstance().getCrimes(), itemListener);
+        adapter = new CrimeListAdapter(CrimeStoreProvider.getInstance(getContext()).getCrimes(), itemListener);
         recyclerView.setAdapter(adapter);
 
         ItemTouchHelper touchHelper = new ItemTouchHelper(
@@ -77,12 +77,12 @@ public class CrimeListFragment extends Fragment {
     }
 
     private void deleteItem(final Crime crime, final int position) {
-        CrimeStoreProvider.getInstance().deleteCrime(crime);
+        CrimeStoreProvider.getInstance(getContext()).deleteCrime(crime);
         Snackbar.make(recyclerView, R.string.snackbar_message, Snackbar.LENGTH_LONG)
                 .setAction(R.string.snackbar_action, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        CrimeStoreProvider.getInstance().resurrectCrime(crime, position);
+                        CrimeStoreProvider.getInstance(getContext()).resurrectCrime(crime, position);
                     }
                 })
                 .show();
@@ -96,7 +96,7 @@ public class CrimeListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.add) {
-            CrimeStoreProvider.getInstance().generateRandomCrime();
+            CrimeStoreProvider.getInstance(getContext()).generateRandomCrime();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -106,13 +106,13 @@ public class CrimeListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        CrimeStoreProvider.getInstance().addListener(crimesListChangedListener);
+        CrimeStoreProvider.getInstance(getContext()).addListener(crimesListChangedListener);
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onPause() {
-        CrimeStoreProvider.getInstance().removeListener(crimesListChangedListener);
+        CrimeStoreProvider.getInstance(getContext()).removeListener(crimesListChangedListener);
         super.onPause();
     }
 

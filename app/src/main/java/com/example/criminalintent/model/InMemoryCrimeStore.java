@@ -7,7 +7,15 @@ import java.util.UUID;
 
 class InMemoryCrimeStore extends BaseCrimeStore {
 
-    private final List<Crime> crimes = new ArrayList<>();
+    private final List<Crime> crimes;
+
+    InMemoryCrimeStore() {
+        this(new ArrayList<Crime>());
+    }
+
+    InMemoryCrimeStore(List<Crime> initialCrimes) {
+        this.crimes = initialCrimes;
+    }
 
     @Override
     public List<Crime> getCrimes() {
@@ -58,5 +66,10 @@ class InMemoryCrimeStore extends BaseCrimeStore {
     public void resurrectCrime(Crime crime, int position) {
         crimes.add(position, crime);
         notifyListeners();
+    }
+
+    @Override
+    public void update(Crime crime) {
+        // Nothing to do here
     }
 }

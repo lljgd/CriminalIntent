@@ -1,5 +1,7 @@
 package com.example.criminalintent.model;
 
+import android.content.Context;
+
 public class CrimeStoreProvider {
 
     private static CrimeStore instance;
@@ -7,9 +9,10 @@ public class CrimeStoreProvider {
     private CrimeStoreProvider() {
     }
 
-    public static CrimeStore getInstance() {
+    public static CrimeStore getInstance(Context context) {
         if (instance == null) {
-            instance = new InMemoryCrimeStore();
+//            instance = new InMemoryCrimeStore();
+            instance = new SharePreferencesCrimeStore(context);
         }
         return instance;
     }

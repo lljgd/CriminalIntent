@@ -16,6 +16,8 @@ public interface CrimeStore {
 
     void resurrectCrime(Crime crime, int position);
 
+    void update(Crime crime);
+
     void addListener(Listener listener);
 
     void removeListener(Listener listener);

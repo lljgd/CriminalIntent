@@ -27,7 +27,7 @@ public class DeleteConfirmationDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         UUID idOfItemToDelete = (UUID) getArguments().getSerializable(KEY_ID);
-                        CrimeStoreProvider.getInstance().deleteCrime(idOfItemToDelete);
+                        CrimeStoreProvider.getInstance(getContext()).deleteCrime(idOfItemToDelete);
                     }
                 })
                 .setNegativeButton(android.R.string.no, null)

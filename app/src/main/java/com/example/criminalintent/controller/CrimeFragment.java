@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.criminalintent.R;
 import com.example.criminalintent.model.Crime;
+import com.example.criminalintent.model.CrimeStore;
 import com.example.criminalintent.model.CrimeStoreProvider;
 
 import java.util.UUID;
@@ -38,7 +39,7 @@ public class CrimeFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         UUID id = (UUID) getArguments().getSerializable(KEY_CRIME_ID);
-        crime = CrimeStoreProvider.getInstance().getById(id);
+        crime = CrimeStoreProvider.getInstance(getContext()).getById(id);
     }
 
     @Nullable
@@ -87,6 +88,12 @@ public class CrimeFragment extends Fragment {
                 crime.setSolved(isChecked);
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        CrimeStoreProvider.getInstance(getContext()).update(crime);
+        super.onPause();
     }
 
     public static CrimeFragment makeInstance(UUID id) {
