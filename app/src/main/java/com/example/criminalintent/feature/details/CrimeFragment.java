@@ -91,7 +91,7 @@ public class CrimeFragment extends Fragment {
 
     @Override
     public void onPause() {
-        CrimeStoreProvider.getInstance(getContext()).update(crime);
+//        CrimeStoreProvider.getInstance(getContext()).update(crime);
         super.onPause();
     }
 

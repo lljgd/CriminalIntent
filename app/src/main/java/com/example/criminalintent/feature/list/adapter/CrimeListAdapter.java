@@ -26,9 +26,14 @@ public class CrimeListAdapter extends RecyclerView.Adapter<CrimeViewHolder> {
         setHasStableIds(true);
     }
 
+    public void submitList(List<Crime> newList) {
+        this.crimes = newList;
+        notifyDataSetChanged();
+    }
+
     @Override
     public long getItemId(int position) {
-        return crimes.get(position).hashCode();
+        return crimes.get(position).getId().hashCode();
     }
 
     @NonNull

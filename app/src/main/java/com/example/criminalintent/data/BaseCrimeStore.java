@@ -1,25 +1,39 @@
 package com.example.criminalintent.data;
 
+import com.example.criminalintent.data.model.Crime;
+
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 abstract class BaseCrimeStore implements CrimeStore {
 
     private final Set<Listener> listenersSet = new HashSet<>();
 
-    final void notifyListeners() {
+    protected final void notifyListeners() {
         for (Listener listener : listenersSet) {
             listener.onCrimesListChanged();
         }
     }
 
     @Override
-    public void addListener(Listener listener) {
+    public final void addListener(Listener listener) {
         listenersSet.add(listener);
     }
 
     @Override
-    public void removeListener(Listener listener) {
+    public final void removeListener(Listener listener) {
         listenersSet.remove(listener);
+    }
+
+    protected static Crime makeRandomCrime() {
+        Random random = new Random();
+
+        Crime crime = new Crime();
+
+        crime.setTitle("Crime #" + random.nextInt());
+        crime.setSolved(random.nextBoolean());
+
+        return crime;
     }
 }

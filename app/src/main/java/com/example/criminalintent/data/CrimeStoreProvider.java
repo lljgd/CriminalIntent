@@ -12,7 +12,8 @@ public class CrimeStoreProvider {
     public static CrimeStore getInstance(Context context) {
         if (instance == null) {
 //            instance = new InMemoryCrimeStore();
-            instance = new SharePreferencesCrimeStore(context);
+//            instance = new SharedPreferencesCrimeStore2(context);
+            instance = new SharedPreferencesCrimeStore(context);
         }
         return instance;
     }

@@ -25,6 +25,8 @@ import com.example.criminalintent.feature.list.adapter.CrimeListAdapter;
 import com.example.criminalintent.feature.list.adapter.CrimeViewHolder;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.List;
+
 public class CrimeListFragment extends Fragment {
 
     // View
@@ -108,7 +110,7 @@ public class CrimeListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         CrimeStoreProvider.getInstance(getContext()).addListener(crimesListChangedListener);
-        adapter.notifyDataSetChanged();
+        updateList();
     }
 
     @Override
@@ -120,9 +122,14 @@ public class CrimeListFragment extends Fragment {
     private final CrimeStore.Listener crimesListChangedListener = new CrimeStore.Listener() {
         @Override
         public void onCrimesListChanged() {
-            adapter.notifyDataSetChanged();
+            updateList();
         }
     };
+
+    private void updateList() {
+        List<Crime> crimes = CrimeStoreProvider.getInstance(getContext()).getCrimes();
+        adapter.submitList(crimes);
+    }
 
     private final CrimeListAdapter.ItemListener itemListener = new CrimeListAdapter.ItemListener() {
         @Override

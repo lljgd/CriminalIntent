@@ -13,13 +13,13 @@ import java.util.List;
 import java.util.UUID;
 
 
-class SharePreferencesCrimeStore implements CrimeStore {
+class SharedPreferencesCrimeStore2 implements CrimeStore {
 
     private final SharedPreferences sharedPreferences;
 
     private final InMemoryCrimeStore inMemoryCrimeStore;
 
-    SharePreferencesCrimeStore(Context context) {
+    SharedPreferencesCrimeStore2(Context context) {
         sharedPreferences = context.getSharedPreferences("crimeStore.prefs", Context.MODE_PRIVATE);
         inMemoryCrimeStore = new InMemoryCrimeStore(readSavedCrimes());
     }
@@ -72,10 +72,10 @@ class SharePreferencesCrimeStore implements CrimeStore {
         saveCurrentCrimes();
     }
 
-    @Override
-    public void update(Crime crime) {
-        saveCurrentCrimes();
-    }
+//    @Override
+//    public void update(Crime crime) {
+//        saveCurrentCrimes();
+//    }
 
     @Override
     public void addListener(Listener listener) {
