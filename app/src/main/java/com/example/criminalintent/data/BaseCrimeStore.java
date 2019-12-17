@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-abstract class BaseCrimeStore implements CrimeStore {
+public abstract class BaseCrimeStore implements CrimeStore {
 
     private final Set<Listener> listenersSet = new HashSet<>();
 
