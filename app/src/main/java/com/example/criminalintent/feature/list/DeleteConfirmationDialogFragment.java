@@ -1,4 +1,4 @@
-package com.example.criminalintent.controller;
+package com.example.criminalintent.feature.list;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -10,7 +10,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.criminalintent.R;
-import com.example.criminalintent.model.CrimeStore;
+import com.example.criminalintent.data.CrimeStoreProvider;
 
 import java.util.UUID;
 
@@ -27,7 +27,7 @@ public class DeleteConfirmationDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         UUID idOfItemToDelete = (UUID) getArguments().getSerializable(KEY_ID);
-                        CrimeStore.getInstance().deleteCrime(idOfItemToDelete);
+                        CrimeStoreProvider.getInstance(getContext()).deleteCrime(idOfItemToDelete);
                     }
                 })
                 .setNegativeButton(android.R.string.no, null)

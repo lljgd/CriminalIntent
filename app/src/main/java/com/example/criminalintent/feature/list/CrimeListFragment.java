@@ -1,4 +1,4 @@
-package com.example.criminalintent.controller;
+package com.example.criminalintent.feature.list;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,12 +16,16 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.criminalintent.model.CrimeStore;
-import com.example.criminalintent.view.CrimeListAdapter;
+import com.example.criminalintent.feature.details.CrimeActivity;
+import com.example.criminalintent.data.CrimeStore;
+import com.example.criminalintent.data.CrimeStoreProvider;
 import com.example.criminalintent.R;
-import com.example.criminalintent.model.Crime;
-import com.example.criminalintent.view.CrimeViewHolder;
+import com.example.criminalintent.data.model.Crime;
+import com.example.criminalintent.feature.list.adapter.CrimeListAdapter;
+import com.example.criminalintent.feature.list.adapter.CrimeViewHolder;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.List;
 
 public class CrimeListFragment extends Fragment {
 
@@ -55,7 +59,7 @@ public class CrimeListFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new CrimeListAdapter(CrimeStore.getInstance().getCrimes(), itemListener);
+        adapter = new CrimeListAdapter(CrimeStoreProvider.getInstance(getContext()).getCrimes(), itemListener);
         recyclerView.setAdapter(adapter);
 
         ItemTouchHelper touchHelper = new ItemTouchHelper(
@@ -76,12 +80,12 @@ public class CrimeListFragment extends Fragment {
     }
 
     private void deleteItem(final Crime crime, final int position) {
-        CrimeStore.getInstance().deleteCrime(crime);
+        CrimeStoreProvider.getInstance(getContext()).deleteCrime(crime);
         Snackbar.make(recyclerView, R.string.snackbar_message, Snackbar.LENGTH_LONG)
                 .setAction(R.string.snackbar_action, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        CrimeStore.getInstance().resurrectCrim(crime, position);
+                        CrimeStoreProvider.getInstance(getContext()).resurrectCrime(crime, position);
                     }
                 })
                 .show();
@@ -95,7 +99,7 @@ public class CrimeListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.add) {
-            CrimeStore.getInstance().generateRandomCrime();
+            CrimeStoreProvider.getInstance(getContext()).generateRandomCrime();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -105,22 +109,27 @@ public class CrimeListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        CrimeStore.getInstance().addListener(crimesListChangedListener);
-        adapter.notifyDataSetChanged();
+        CrimeStoreProvider.getInstance(getContext()).addListener(crimesListChangedListener);
+        updateList();
     }
 
     @Override
     public void onPause() {
-        CrimeStore.getInstance().removeListener(crimesListChangedListener);
+        CrimeStoreProvider.getInstance(getContext()).removeListener(crimesListChangedListener);
         super.onPause();
     }
 
     private final CrimeStore.Listener crimesListChangedListener = new CrimeStore.Listener() {
         @Override
         public void onCrimesListChanged() {
-            adapter.notifyDataSetChanged();
+            updateList();
         }
     };
+
+    private void updateList() {
+        List<Crime> crimes = CrimeStoreProvider.getInstance(getContext()).getCrimes();
+        adapter.submitList(crimes);
+    }
 
     private final CrimeListAdapter.ItemListener itemListener = new CrimeListAdapter.ItemListener() {
         @Override

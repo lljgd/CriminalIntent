@@ -1,33 +1,30 @@
-package com.example.criminalintent.model;
+package com.example.criminalintent.data;
+
+import com.example.criminalintent.data.model.Crime;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 import java.util.UUID;
 
-public class CrimeStore {
+class InMemoryCrimeStore extends BaseCrimeStore {
 
-    // Singleton
-    private static CrimeStore instance;
+    private final List<Crime> crimes;
 
-    private CrimeStore() { }
-
-    public static CrimeStore getInstance() {
-        if (instance == null) {
-            instance = new CrimeStore();
-        }
-        return instance;
+    InMemoryCrimeStore() {
+        this(new ArrayList<Crime>());
     }
-    // End of Singleton
 
-    private List<Crime> crimes = new ArrayList<>();
+    InMemoryCrimeStore(List<Crime> initialCrimes) {
+        this.crimes = initialCrimes;
+    }
 
+    @Override
     public List<Crime> getCrimes() {
         return crimes;
     }
 
+    @Override
     public Crime getById(UUID id) {
         for (Crime crime : crimes) {
             if (crime.getId().equals(id)) {
@@ -37,6 +34,7 @@ public class CrimeStore {
         return null;
     }
 
+    @Override
     public void generateRandomCrime() {
         Random random = new Random();
 
@@ -49,11 +47,13 @@ public class CrimeStore {
         notifyListeners();
     }
 
+    @Override
     public void deleteCrime(Crime crime) {
         crimes.remove(crime);
         notifyListeners();
     }
 
+    @Override
     public void deleteCrime(UUID id) {
         for (Crime crime : crimes) {
             if (crime.getId() == id) {
@@ -64,28 +64,14 @@ public class CrimeStore {
         }
     }
 
-    public void resurrectCrim(Crime crime, int position) {
+    @Override
+    public void resurrectCrime(Crime crime, int position) {
         crimes.add(position, crime);
         notifyListeners();
     }
 
-    private void notifyListeners() {
-        for (Listener listener : listenersSet) {
-            listener.onCrimesListChanged();
-        }
-    }
-
-    private final Set<Listener> listenersSet = new HashSet<>();
-
-    public void addListener(Listener listener) {
-        listenersSet.add(listener);
-    }
-
-    public void removeListener(Listener listener) {
-        listenersSet.remove(listener);
-    }
-
-    public interface Listener {
-        void onCrimesListChanged();
-    }
+//    @Override
+//    public void update(Crime crime) {
+//    //     Nothing to do here
+//    }
 }

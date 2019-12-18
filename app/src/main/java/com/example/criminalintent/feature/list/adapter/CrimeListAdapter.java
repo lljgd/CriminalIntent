@@ -1,6 +1,5 @@
-package com.example.criminalintent.view;
+package com.example.criminalintent.feature.list.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.criminalintent.R;
-import com.example.criminalintent.model.Crime;
+import com.example.criminalintent.data.model.Crime;
 
 import java.util.List;
 
@@ -27,9 +26,14 @@ public class CrimeListAdapter extends RecyclerView.Adapter<CrimeViewHolder> {
         setHasStableIds(true);
     }
 
+    public void submitList(List<Crime> newList) {
+        this.crimes = newList;
+        notifyDataSetChanged();
+    }
+
     @Override
     public long getItemId(int position) {
-        return crimes.get(position).hashCode();
+        return crimes.get(position).getId().hashCode();
     }
 
     @NonNull

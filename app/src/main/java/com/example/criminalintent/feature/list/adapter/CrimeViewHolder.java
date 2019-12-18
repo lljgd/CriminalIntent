@@ -1,4 +1,4 @@
-package com.example.criminalintent.view;
+package com.example.criminalintent.feature.list.adapter;
 
 import android.view.View;
 import android.widget.CheckBox;
@@ -8,9 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.criminalintent.R;
-import com.example.criminalintent.model.Crime;
-
-import java.util.UUID;
+import com.example.criminalintent.data.model.Crime;
 
 public class CrimeViewHolder extends RecyclerView.ViewHolder {
 
