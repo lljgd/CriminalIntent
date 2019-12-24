@@ -73,6 +73,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 crime.setTitle(s.toString());
+                saveCrimeObject();
             }
 
             @Override
@@ -85,14 +86,13 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 crime.setSolved(isChecked);
+                saveCrimeObject();
             }
         });
     }
 
-    @Override
-    public void onPause() {
-//        CrimeStoreProvider.getInstance(getContext()).update(crime);
-        super.onPause();
+    private void saveCrimeObject() {
+        CrimeStoreProvider.getInstance(getContext()).update(crime);
     }
 
     public static CrimeFragment makeInstance(UUID id) {

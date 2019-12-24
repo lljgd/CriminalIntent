@@ -75,4 +75,10 @@ public class RoomCrimeStore extends BaseCrimeStore {
         crimeDao.add(Converter.convert(crime));
         notifyListeners();
     }
+
+    @Override
+    public void update(Crime crime) {
+        crimeDao.update(Converter.convert(crime));
+        notifyListeners();
+    }
 }

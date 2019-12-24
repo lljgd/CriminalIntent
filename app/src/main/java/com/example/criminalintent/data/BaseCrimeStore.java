@@ -36,4 +36,9 @@ public abstract class BaseCrimeStore implements CrimeStore {
 
         return crime;
     }
+
+    @Override
+    public void update(Crime crime) {
+        // TODO implement me
+    }
 }

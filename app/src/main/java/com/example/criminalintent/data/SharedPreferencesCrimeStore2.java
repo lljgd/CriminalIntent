@@ -86,4 +86,9 @@ class SharedPreferencesCrimeStore2 implements CrimeStore {
     public void removeListener(Listener listener) {
         inMemoryCrimeStore.removeListener(listener);
     }
+
+    @Override
+    public void update(Crime crime) {
+        // TODO implement me
+    }
 }
