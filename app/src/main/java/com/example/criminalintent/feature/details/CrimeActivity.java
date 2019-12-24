@@ -19,7 +19,7 @@ public class CrimeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_crime_list);
+        setContentView(R.layout.activity_crime_details);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 

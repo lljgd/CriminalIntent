@@ -21,6 +21,7 @@ import com.example.criminalintent.data.CrimeStore;
 import com.example.criminalintent.data.CrimeStoreProvider;
 import com.example.criminalintent.R;
 import com.example.criminalintent.data.model.Crime;
+import com.example.criminalintent.feature.details.CrimeFragment;
 import com.example.criminalintent.feature.list.adapter.CrimeListAdapter;
 import com.example.criminalintent.feature.list.adapter.CrimeViewHolder;
 import com.google.android.material.snackbar.Snackbar;
@@ -134,8 +135,14 @@ public class CrimeListFragment extends Fragment {
     private final CrimeListAdapter.ItemListener itemListener = new CrimeListAdapter.ItemListener() {
         @Override
         public void onCrimeClicked(Crime crime) {
-            Intent intent = CrimeActivity.makeIntent(getContext(), crime.getId());
-            startActivity(intent);
+            if (getResources().getBoolean(R.bool.two_panel_mode)) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container_detail, CrimeFragment.makeInstance(crime.getId()))
+                        .commit();
+            } else {
+                Intent intent = CrimeActivity.makeIntent(getContext(), crime.getId());
+                startActivity(intent);
+            }
         }
 
         @Override
